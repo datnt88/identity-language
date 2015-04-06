@@ -1,5 +1,6 @@
 package tu.icl.internal;
 
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -10,15 +11,9 @@ import com.google.common.io.Files;
 
 public class iTokenizer {
 	
-	public Map<String, Double> toComonWordDict(String filename){
-		String text = "";
-		try {
-			text = Files.toString(new File(filename), StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public Map<String, Double> toComonWordDict(String filename) throws IOException{
 		
+		String	text = Files.toString(new File(filename), StandardCharsets.UTF_8);
 		StringTokenizer st = new StringTokenizer(text);
 		Map<String, Double> lex_dict = new HashMap<String, Double>();
 		Map<String, Double> result = new HashMap<String, Double>();
@@ -43,7 +38,6 @@ public class iTokenizer {
 	    	}
 	    }
 	   
-	    
 	    // compute probability of each small word
 	    for(Map.Entry<String, Double> entry: result.entrySet() ){
 	    	String word = entry.getKey();
@@ -55,15 +49,9 @@ public class iTokenizer {
 	}
 	
 	///////////////////////////////////////////////////////////////////
-	public Map<String, Double> toNGramDict(String filename){
-		String text = "";
-		try {
-			text = Files.toString(new File(filename), StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public Map<String, Double> toNGramDict(String filename) throws IOException{
 		
+		String	text = Files.toString(new File(filename), StandardCharsets.UTF_8);
 		int n = text.length();
 		Map<String, Double> ngram_dict = new HashMap<String, Double>();
 		String _3gram;
@@ -74,13 +62,12 @@ public class iTokenizer {
 		}
 		
 		Map<String, Double> result = new HashMap<String, Double>();
-		
 	    double totalCount = 0.0;
-	    //retain word has more than three counts
 	    result.putAll(ngram_dict);
 	    
 	    for(Map.Entry<String, Double> entry: ngram_dict.entrySet()){
 	    	Double count = entry.getValue();
+	    	// retain ngram having more than 100 occurrences 
 	    	if(count >=100.0){
 	    		totalCount+=count;
 	    	}
@@ -89,9 +76,6 @@ public class iTokenizer {
 	    	}
 	    }
 	    
-	    //System.out.println(ngram_dict.size());
-	    //System.out.println(result.size());
-	   
 	    // compute probability of each 3gram
 	    for(Map.Entry<String, Double> entry: result.entrySet() ){
 	    	String word = entry.getKey();

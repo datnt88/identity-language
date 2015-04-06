@@ -31,8 +31,8 @@ public class iUtil {
 		return null;
 	}
 	
+	
 	public static double getMinValue(Map<String, Double> map){
-        //List<Double> pro_list = (List<Double>) map.values();
         return Collections.min(map.values());
     }
 	
@@ -40,7 +40,6 @@ public class iUtil {
 		double prob = 1.0;
 		//get minimum probability of a word which is not in lexical training dict
 		double minProb = getMinValue(lex_train);
-		//System.out.println(minProb);
 		
 		for (Map.Entry<String, Double> entry: lex_test.entrySet()){
 			String word = entry.getKey();
