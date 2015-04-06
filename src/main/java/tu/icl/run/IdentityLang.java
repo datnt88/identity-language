@@ -126,9 +126,9 @@ public class IdentityLang {
 		}
 
 		if (tech.equals("ngram")) {
-			System.out.println("Techinique: Trigram ...!");
+			System.out.println("Technique: Trigram ...!");
 		} else {
-			System.out.println("Techinique: Small Word ...!");
+			System.out.println("Technique: Small Word ...!");
 		}
 		System.out.println("Document: " + new File(filename).getName());
 
