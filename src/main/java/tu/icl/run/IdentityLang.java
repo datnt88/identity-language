@@ -51,7 +51,6 @@ public class IdentityLang {
 		String filename = null;
 		for (File f : files) {
 			filename = f.getName();
-			// System.out.println(filename);
 			if (f.isFile() && filename.contains(".ser")) {
 				FileInputStream fileIn = new FileInputStream(dir + filename);
 				ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -65,14 +64,14 @@ public class IdentityLang {
 	}
 
 	public void run(String args[]) throws ClassNotFoundException, IOException {
-		System.out
-				.println("\n========== Starting Language Identity task =======");
+		System.out.println("\n======== Starting Language Identity task =====");
 		CommandLine cl = parseArguments02(args);
 		String tech = cl.getOptionValue("t");
 		String filename = cl.getOptionValue("d");
 
-		String	text = Files.toString(new File(filename), StandardCharsets.UTF_8);
-	
+		String text = Files
+				.toString(new File(filename), StandardCharsets.UTF_8);
+
 		// pre process remove \n and long white spaces
 		text = text.replaceAll("\n", "");
 		text = text.replaceAll("\\s+", " ");
@@ -80,19 +79,20 @@ public class IdentityLang {
 		int n = sentences.length;
 
 		iTokenizer it = new iTokenizer();
-		List<LangModel> listOfModels = new ArrayList<LangModel>();
-		listOfModels = loadModels();
+		List<LangModel> listOfModels = loadModels();
 		int nModel = listOfModels.size();
 
 		Map<String, Double> result = new HashMap<String, Double>();
+		Map<String, Double> lex_sen;
 
 		if (tech.equals("ngram")) {
 			for (int i = 0; i < n; i++) {
-				Map<String, Double> lex_sen = it.ngram_tokenize(sentences[i]);
+				lex_sen = it.ngram_tokenize(sentences[i]);
 				double max_prob = 0.0;
 				String lang = null;
+				LangModel model;
 				for (int j = 0; j < nModel; j++) {
-					LangModel model = listOfModels.get(j);
+					model = listOfModels.get(j);
 					double prob = iUtil.computeProbability(lex_sen,
 							model.getNGram_dict());
 					if (prob > max_prob) {
@@ -107,11 +107,12 @@ public class IdentityLang {
 
 		} else {
 			for (int i = 0; i < n; i++) {
-				Map<String, Double> lex_sen = it.lex_tokenize(sentences[i]);
+				lex_sen = it.lex_tokenize(sentences[i]);
 				double max_prob = 0.0;
 				String lang = null;
+				LangModel model;
 				for (int j = 0; j < nModel; j++) {
-					LangModel model = listOfModels.get(j);
+					model = listOfModels.get(j);
 					double prob = iUtil.computeProbability(lex_sen,
 							model.getWord_dict());
 					if (prob > max_prob) {
@@ -137,12 +138,10 @@ public class IdentityLang {
 			System.out.println(" * Has: " + df.format(entry.getValue())
 					+ "\t sentences in " + entry.getKey());
 		}
-		// print the most detected language
-		System.out
-				.println("--------------------------------------------------");
+
+		System.out.println("------------------------------------------------");
 		System.out.println("The main language: " + iUtil.getMaxByValue(result));
-		System.out
-				.println("==================================================");
+		System.out.println("================================================");
 	}
 
 	@SuppressWarnings({ "static-access" })
@@ -170,7 +169,8 @@ public class IdentityLang {
 		return line;
 	}
 
-	public static void main(String args[]) throws ClassNotFoundException, IOException {
+	public static void main(String args[]) throws ClassNotFoundException,
+			IOException {
 		IdentityLang r = new IdentityLang();
 		r.run(args);
 	}

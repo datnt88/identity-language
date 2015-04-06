@@ -41,8 +41,7 @@ public class BuildModel {
 		String corpusFile = cl.getOptionValue("c");
 		String language = cl.getOptionValue("l").toUpperCase();
 
-		System.out
-				.println("\n========== Start building Language Model =======");
+		System.out.println("\n======= Start building Language Model =====");
 		System.out.println("Language: " + language);
 		iTokenizer it = new iTokenizer();
 		Map<String, Double> word_dict = it.toComonWordDict(corpusFile);
@@ -51,8 +50,7 @@ public class BuildModel {
 
 		// print some basic information
 		DecimalFormat df = new DecimalFormat("#.#####");
-		System.out
-				.println("--------------------------------------------------");
+		System.out.println("---------------------------------------------");
 		System.out.println("Most frequency words vs probabilities: ");
 		String key = "";
 		for (int i = 0; i < 10; i++) {
@@ -75,8 +73,7 @@ public class BuildModel {
 				+ language.toUpperCase() + ".ser");
 		ObjectOutputStream out = new ObjectOutputStream(fileOut);
 		out.writeObject(model);
-		System.out
-				.println("\n--------- Serialized in folder ./model/ --------");
+		System.out.println("\n------ Serialized in folder ./model/ ------");
 		out.close();
 		fileOut.close();
 
