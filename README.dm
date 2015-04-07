@@ -23,7 +23,8 @@ To build the model for new lanuage:
 note: there current are 6 language models:
 English, Geman, French, Spanish, Czech and Vietnamese 
 
-To indendity the language of a given document
+To indendity the language of a given document with
+techique (ngram or smallword)
 ./target/indentity-language.jar -d <document> -t <techique>
 
 

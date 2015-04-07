@@ -151,7 +151,7 @@ public class IdentityLang {
 				.withDescription("file containing testing document")
 				.withLongOpt("document").isRequired().create("d");
 		Option t = OptionBuilder.withArgName("technique").hasArg()
-				.withDescription("techique to run ngam or smallword")
+				.withDescription("techique to run: \"ngam\" or \"smallword\"" )
 				.withLongOpt("technique").isRequired().create('t');
 
 		options.addOption(d);
